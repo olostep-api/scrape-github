@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrape GitHub</title>
+    <link rel="stylesheet" href="./popup.css">
+  </head>
+  <body>
+    <main class="popup">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">olostep</p>
+          <h1>Scrape GitHub</h1>
+        </div>
+        <a class="docs-link" href="https://olostep.com" target="_blank" rel="noreferrer">API</a>
+      </header>
+
+      <section class="panel intro-panel">
+        <p class="intro-title">GitHub parser</p>
+        <p class="intro-copy">Parse repository roots and personal profile roots into structured JSON with a local extension UI that mirrors the OloStep workflow.</p>
+      </section>
+
+      <section class="panel">
+        <div class="status-row">
+          <span id="status-badge" class="badge">Checking tab</span>
+          <span class="hint">Supported: repo root, profile root</span>
+        </div>
+
+        <p id="status-text" class="status-text">Open a GitHub repository root or user profile root.</p>
+
+        <div class="actions">
+          <button id="parse-button" class="primary" type="button" disabled>Parse current page</button>
+          <button id="copy-button" class="secondary" type="button" disabled>Copy JSON</button>
+        </div>
+
+        <pre id="output" class="output">No parsed result yet.</pre>
+      </section>
+    </main>
+
+    <script type="module" src="./popup.js"></script>
+  </body>
+</html>

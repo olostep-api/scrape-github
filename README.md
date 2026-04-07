@@ -1,1 +1,127 @@
-# scrape-github
+# Scrape GitHub
+
+Open-source GitHub scrapers in two forms:
+
+- copy-pasteable OloStep parser scripts for the Parsers dashboard
+- a local Chrome extension that parses the active GitHub tab in the popup
+
+This first version supports:
+
+- repository root pages: `https://github.com/{owner}/{repo}`
+- personal user profile root pages: `https://github.com/{username}`
+
+Unsupported in v1:
+
+- organization pages
+- repository subpages like `issues`, `pulls`, `actions`
+- profile tab routes like `?tab=repositories`
+
+## Repo Layout
+
+- `parsers/github-repository.parser.js`: OloStep parser for repository root pages
+- `parsers/github-user-profile.parser.js`: OloStep parser for user profile root pages
+- `extension/`: Manifest V3 Chrome extension
+- `docs/github-parser-notes.md`: parser and blog-post notes
+
+## OloStep Parsers
+
+Each parser is written to match the observed OloStep dashboard contract:
+
+```js
+async function parse(htmlString, pageUrl) {
+  // pageUrl is optional
+}
+```
+
+The implementation relies on `htmlString` and `DOMParser`, so the same file stays portable between the dashboard and API execution.
+
+### Save In OloStep
+
+1. Open the Parsers dashboard.
+2. Create a new parser.
+3. Paste either `parsers/github-repository.parser.js` or `parsers/github-user-profile.parser.js`.
+4. Add a parser name and a GitHub run target URL.
+5. Save and continue.
+
+### Test In API
+
+OloStep invokes saved parsers through the scrape API using the parser id.
+
+```js
+const endpoint = "https://api.olostep.com/v1/scrapes";
+const payload = {
+  formats: ["json", "html"],
+  parser: { id: "@your-parser-id" },
+  url_to_scrape: "https://github.com/octocat",
+  wait_before_scraping: 0,
+  remove_css_selectors: "default",
+  country: "US"
+};
+```
+
+Observed response shape:
+
+- parsed JSON appears in `result.json_content`
+- raw HTML appears in `result.html_content`
+- hosted artifacts appear in `result.json_hosted_url` and `result.html_hosted_url`
+
+## Chrome Extension
+
+The extension runs locally and does not call the OloStep API. It mirrors the same parsing logic in the popup.
+
+### Load It In Chrome
+
+1. Open `chrome://extensions`
+2. Enable Developer Mode
+3. Click Load unpacked
+4. Select the [`extension`](/Users/applemacbookpro/Projects/Olostep/scrape-github/extension) folder
+
+### Use It
+
+1. Open a supported GitHub repository root or personal profile root.
+2. Open the extension popup.
+3. Click `Parse current page`.
+4. Review or copy the generated JSON.
+
+## Output Shape
+
+Repository parser fields:
+
+- `success`
+- `type`
+- `timestamp`
+- `url`
+- `owner`
+- `name`
+- `fullName`
+- `description`
+- `primaryLanguage`
+- `stars`
+- `forks`
+- `watchers`
+- `license`
+- `topics`
+- `readmeSummary`
+
+User profile parser fields:
+
+- `success`
+- `type`
+- `timestamp`
+- `url`
+- `username`
+- `displayName`
+- `bio`
+- `followers`
+- `following`
+- `company`
+- `location`
+- `website`
+- `joinDate`
+- `socialLinks`
+- `pinnedRepositories`
+
+## Notes
+
+- Rotate any OloStep API key that has been pasted into logs or chat.
+- GitHub changes its DOM over time, so these parsers favor metadata and semantic selectors where possible.

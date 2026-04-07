@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Scrape GitHub",
+  "version": "0.1.0",
+  "description": "Parse GitHub repository and user profile pages into structured JSON.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://github.com/*"
+  ],
+  "action": {
+    "default_title": "Scrape GitHub",
+    "default_popup": "popup.html"
+  }
+}
