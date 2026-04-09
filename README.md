@@ -2,7 +2,7 @@
 
 Open-source GitHub scrapers in two forms:
 
-- copy-pasteable OloStep parser scripts for the Parsers dashboard
+- copy-pasteable Olostep parser scripts for the Parsers dashboard
 - a local Chrome extension that parses the active GitHub tab in the popup
 
 This first version supports:
@@ -18,14 +18,14 @@ Unsupported in v1:
 
 ## Repo Layout
 
-- `parsers/github-repository.parser.js`: OloStep parser for repository root pages
-- `parsers/github-user-profile.parser.js`: OloStep parser for user profile root pages
+- `parsers/github-repository.parser.js`: Olostep parser for repository root pages
+- `parsers/github-user-profile.parser.js`: Olostep parser for user profile root pages
 - `extension/`: Manifest V3 Chrome extension
 - `docs/github-parser-notes.md`: parser and blog-post notes
 
-## OloStep Parsers
+## Olostep Parsers
 
-Each parser is written to match the observed OloStep dashboard contract:
+Each parser is written to match the observed Olostep dashboard contract:
 
 ```js
 async function parse(htmlString, pageUrl) {
@@ -35,7 +35,7 @@ async function parse(htmlString, pageUrl) {
 
 The implementation relies on `htmlString` and `DOMParser`, so the same file stays portable between the dashboard and API execution.
 
-### Save In OloStep
+### Save In Olostep
 
 1. Open the Parsers dashboard.
 2. Create a new parser.
@@ -45,17 +45,14 @@ The implementation relies on `htmlString` and `DOMParser`, so the same file stay
 
 ### Test In API
 
-OloStep invokes saved parsers through the scrape API using the parser id.
+Olostep invokes saved parsers through the scrape API using the parser id.
 
 ```js
 const endpoint = "https://api.olostep.com/v1/scrapes";
 const payload = {
   formats: ["json", "html"],
   parser: { id: "@your-parser-id" },
-  url_to_scrape: "https://github.com/octocat",
-  wait_before_scraping: 0,
-  remove_css_selectors: "default",
-  country: "US"
+  url_to_scrape: "https://github.com/octocat"
 };
 ```
 
@@ -67,14 +64,23 @@ Observed response shape:
 
 ## Chrome Extension
 
-The extension runs locally and does not call the OloStep API. It mirrors the same parsing logic in the popup.
+The extension runs locally and does not call the Olostep API. It mirrors the same parsing logic in the popup.
+
+### Olostep Dashboard
+
+![Olostep dashboard overview](./docs/assets/olostep-dashboard-overview.png)
+![Olostep parser editor](./docs/assets/olostep-parser-editor.png)
+
+### Chrome Extension
+
+![Chrome extension parsing flow](./docs/assets/chrome-extension-parse.gif)
 
 ### Load It In Chrome
 
 1. Open `chrome://extensions`
 2. Enable Developer Mode
 3. Click Load unpacked
-4. Select the [`extension`](/Users/applemacbookpro/Projects/Olostep/scrape-github/extension) folder
+4. Select the [`extension`](./scrape-github/extension) folder
 
 ### Use It
 
@@ -123,5 +129,5 @@ User profile parser fields:
 
 ## Notes
 
-- Rotate any OloStep API key that has been pasted into logs or chat.
+- Rotate any Olostep API key that has been pasted into logs or chat.
 - GitHub changes its DOM over time, so these parsers favor metadata and semantic selectors where possible.
