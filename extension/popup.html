@@ -29,9 +29,18 @@
 
         <p id="status-text" class="status-text">Open a GitHub repository root or user profile root.</p>
 
+        <div class="toolbar">
+          <div class="segmented" role="group" aria-label="Output format">
+            <button id="format-json" class="segmented-option is-active" type="button" disabled>JSON</button>
+            <button id="format-csv" class="segmented-option" type="button" disabled>CSV</button>
+          </div>
+        </div>
+
         <div class="actions">
           <button id="parse-button" class="primary" type="button" disabled>Parse current page</button>
           <button id="copy-button" class="secondary" type="button" disabled>Copy JSON</button>
+          <button id="download-json-button" class="secondary" type="button" disabled>Download JSON</button>
+          <button id="download-csv-button" class="secondary" type="button" disabled>Download CSV</button>
         </div>
 
         <pre id="output" class="output">No parsed result yet.</pre>
