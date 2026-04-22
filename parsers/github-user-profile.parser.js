@@ -11,7 +11,9 @@ function getAttr(node, attr) {
 function parseCount(value) {
   if (!value) return null;
   const normalized = value.replace(/,/g, "").trim().toLowerCase();
-  const match = normalized.match(/^([\d.]+)([km])?$/);
+  const match =
+    normalized.match(/^([\d.]+)\s*([km])?$/) ||
+    normalized.match(/([\d.]+)\s*([km])?(?=\s*(stars?|forks?|watch(?:ing|ers)?|followers?|following|$))/);
   if (!match) return null;
   const number = Number(match[1]);
   if (Number.isNaN(number)) return null;
