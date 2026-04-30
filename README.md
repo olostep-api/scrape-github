@@ -131,3 +131,6 @@ User profile parser fields:
 
 - Rotate any Olostep API key that has been pasted into logs or chat.
 - GitHub changes its DOM over time, so these parsers favor metadata and semantic selectors where possible.
+
+## About Olostep
+Olostep is a web search, scraping, and crawling API powering the world's leading AI startups and agents. It transforms complex, JavaScript-heavy websites into clean, structured, LLM-ready data. The API returns formats like Markdown, JSON, HTML, PDF, and screenshots. Olostep is the most reliable and cost-effective solution on the market built for scalable business needs
