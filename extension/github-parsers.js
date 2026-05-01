@@ -15,7 +15,9 @@ function getMeta(doc, selector) {
 function parseCount(value) {
   if (!value) return null;
   const normalized = value.replace(/,/g, "").trim().toLowerCase();
-  const match = normalized.match(/^([\d.]+)([km])?$/);
+  const match =
+    normalized.match(/^([\d.]+)\s*([km])?$/) ||
+    normalized.match(/([\d.]+)\s*([km])?(?=\s*(stars?|forks?|watch(?:ing|ers)?|followers?|following|$))/);
   if (!match) return null;
   const number = Number(match[1]);
   if (Number.isNaN(number)) return null;
@@ -83,8 +85,8 @@ function parseRepository(htmlString, pageUrl) {
     return href.includes("/LICENSE") || /license/i.test(getText(node) || "");
   });
   const readmeSummary = getText(
-    doc.querySelector("article.markdown-body p, article.markdown-body h1, article.markdown-body h2")
-  );
+    doc.querySelector("#readme article.markdown-body p, #readme article.markdown-body h1, #readme article.markdown-body h2, article.markdown-body p, article.markdown-body h1, article.markdown-body h2, .js-snippet-clipboard-copy-unpositioned pre")
+  ) || getText(doc.querySelector("#readme .markdown-body, #readme .Box-body, #readme, article.markdown-body, .markdown-body, .js-snippet-clipboard-copy-unpositioned"));
 
   return {
     success: true,

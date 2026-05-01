@@ -66,6 +66,7 @@ body {
   min-height: 36px;
   padding: 0 12px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .panel {
@@ -121,8 +122,63 @@ body {
   color: var(--muted);
 }
 
-.actions {
+.toolbar {
   display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px;
+}
+
+.segmented-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 8px 0 10px;
+}
+
+.segmented-option {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  min-height: 28px;
+  padding: 0 10px;
+  transition: background-color 140ms ease, opacity 140ms ease;
+}
+
+.segmented-option:hover:enabled {
+  background: rgba(108, 99, 255, 0.08);
+  transform: none;
+}
+
+.segmented-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.segmented-option.is-active {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border-color: rgba(108, 99, 255, 0.18);
+  font-weight: 700;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
@@ -169,4 +225,16 @@ button:disabled {
   font: 12px/1.5 "SFMono-Regular", Consolas, monospace;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.footer-link {
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.footer-link a {
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
 }
